@@ -1,0 +1,15 @@
+{
+  "database": {
+    "username": "freedb_sysadmin",
+    "password": "ZV5jaYy8Gdv#kHN",
+    "database": "freedb_university-db",
+    "host": "sql.freedb.tech",
+    "dialect": "mysql"
+  },
+  "servicePort": "8080",
+  "limit": 10,
+  "offset": 0,
+  "defaultClientId": "aaaa-aaaa-aaaa-aaaa",
+  "defaultClientSecret": "bbbbaaaacccc",
+  "jwtSecret": "university-service"
+}

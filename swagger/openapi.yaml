@@ -1,0 +1,299 @@
+openapi: 3.0.3
+info:
+  title: University Service
+  version: 1.0.11
+tags:
+  - name: university
+paths:
+  /api/university:
+    post:
+      tags:
+        - university
+      summary: Create a new university
+      operationId: createUniversity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUniversityRequest'
+      responses:
+        '200':
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUniversityResponse'
+        '500':
+          description: 'Internal Server Error response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    get:
+      tags:
+        - university
+      summary: get university list
+      description: get university listing with filter
+      operationId: getUniversityWithFilter
+      parameters:
+        - name: filter
+          in: query
+          description: Search filter
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: limit pagination
+          required: false
+          schema:
+            type: number
+        - name: offset
+          in: query
+          description: offset pagination
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUniversityList'  
+  /api/university/{id}:
+    get:
+      tags:
+        - university
+      summary: get university list
+      description: get university listing with filter
+      operationId: getUniversityById
+      parameters:
+        - name: id
+          in: path
+          description: university id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUniversityById'  
+    put:
+      tags:
+        - university
+      summary: Change university content
+      operationId: changeUniversity
+      parameters:
+        - name: id
+          in: path
+          description: university id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUniversityRequest'
+      responses:
+        '200':
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeUniversityResponse'
+        '500':
+          description: 'Internal Server Error response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse' 
+    delete:
+      tags:
+        - university
+      summary: Delete University
+      operationId: deleteUniversity
+      parameters:
+        - name: id
+          in: path
+          description: university id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUniversityResponse'
+        '500':
+          description: 'Internal Server Error response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    
+  /api/university/bookmark/{id}:
+    post:
+      tags:
+        - university
+      summary: bookmark University
+      operationId: createBookMark
+      parameters:
+        - name: id
+          in: path
+          description: university id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Success Response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBookmarkUniversityResponse'
+        '500':
+          description: 'Internal Server Error response'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+ 
+components:
+  schemas:
+    CreateBookmarkUniversityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+        isBookmark:
+          type: boolean
+        isActive:
+          type: boolean
+        deletedAt:
+          type: string
+    DeleteUniversityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        isDeleted:
+          type: boolean
+    ChangeUniversityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+    ChangeUniversityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+        isBookmark:
+          type: boolean
+        isActive:
+          type: boolean
+        deletedAt:
+          type: string
+    GetUniversityById:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+        isBookmark:
+          type: boolean
+        isActive:
+          type: boolean
+        deletedAt:
+          type: string
+    UniversityModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+        isBookmark:
+          type: boolean
+        isActive:
+          type: boolean
+        deletedAt:
+          type: string
+    GetUniversityList:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/UniversityModel'
+        count:
+          type: number
+    
+    InternalServerErrorResponse:
+      type: object
+      properties:
+        error: 
+          type: string
+    CreateUniversityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+      required:
+        - name
+        - country
+        - webpages
+
+    CreateUniversityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        webpages:
+          type: string
+        isBookmark:
+          type: boolean
+        isActive:
+          type: boolean
+        deletedAt:
+          type: string
